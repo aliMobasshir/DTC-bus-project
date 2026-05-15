@@ -13,8 +13,8 @@ dtc-mvp/
 │   │   ├── models/       ← Mongoose schemas (Bus, Driver, Route, Schedule, etc.)
 │   │   ├── routes/       ← REST API endpoints
 │   │   ├── services/
-│   │   │   ├── scheduler.js    ← 🧠 Core scheduling algorithm (Greedy + CSP)
-│   │   │   └── gpsSimulator.js ← 🛰 Simulated GPS bus movement
+│   │   │   ├── scheduler.js    ←  Core scheduling algorithm (Greedy + CSP)
+│   │   │   └── gpsSimulator.js ←  Simulated GPS bus movement
 │   │   ├── middleware/   ← JWT auth
 │   │   └── utils/seed.js ← Database seeder (real DTC routes + depots)
 │   └── package.json
@@ -32,69 +32,19 @@ dtc-mvp/
 │   │   │   └── AuthContext.jsx
 │   │   └── utils/api.js          ← Axios API client
 │   └── package.json
-├── render.yaml           ← Render.com deployment config
 └── README.md
 ```
 
 ---
 
-## ⚡ Quick Start (Local)
 
-### Prerequisites
-- Node.js 18+
-- MongoDB Atlas account (free) — or local MongoDB
-
-### Step 1 — Clone & Install
-```bash
-git clone <your-repo>
-cd dtc-mvp
-npm run install:all
-```
-
-### Step 2 — Configure Backend
-```bash
-cd backend
-cp .env.example .env
-# Edit .env and add your MongoDB URI
-```
-
-**.env:**
-```
-MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.xxxxx.mongodb.net/dtc_mvp
-JWT_SECRET=any_random_secret_key_here
-FRONTEND_URL=http://localhost:5173
-```
-
-### Step 3 — Seed the Database
-```bash
-npm run seed
-```
-This creates:
 - 8 real Delhi depots (Kashmere Gate, Rohini, Dwarka, etc.)
 - 24 buses (CNG + EV)
 - 20 drivers with shifts
 - 8 real DTC routes with actual stop coordinates
 - Admin + Operator login accounts
 
-### Step 4 — Configure Frontend
-```bash
-cd frontend
-cp .env.example .env
-# .env already works for local — no changes needed
-```
 
-### Step 5 — Run Both
-```bash
-# Terminal 1
-cd backend && npm run dev
-
-# Terminal 2
-cd frontend && npm run dev
-```
-
-Open: **http://localhost:5173**
-
----
 
 ## 🔑 Login Credentials
 
@@ -107,32 +57,7 @@ Passenger app (no login): **http://localhost:5173/passenger**
 
 ---
 
-## 🚀 Deploy to Production
 
-### Backend → Render.com (Free Tier)
-
-1. Push code to GitHub
-2. Go to [render.com](https://render.com) → New Web Service
-3. Connect your GitHub repo
-4. Set root directory: `backend`
-5. Build command: `npm install`
-6. Start command: `npm start`
-7. Add environment variables:
-   - `MONGODB_URI` → your Atlas URI
-   - `JWT_SECRET` → any random string
-   - `FRONTEND_URL` → your Vercel URL
-
-### Frontend → Vercel (Free)
-
-1. Go to [vercel.com](https://vercel.com) → New Project
-2. Import your GitHub repo
-3. Set root directory: `frontend`
-4. Add environment variable:
-   - `VITE_API_URL` → `https://your-render-app.onrender.com/api`
-   - `VITE_SOCKET_URL` → `https://your-render-app.onrender.com`
-5. Deploy!
-
----
 
 ## 🛠 API Endpoints
 
@@ -189,15 +114,8 @@ File: `backend/src/services/gpsSimulator.js`
 | Database | MongoDB + Mongoose |
 | Real-time | Socket.IO (WebSockets) |
 | Auth | JWT (jsonwebtoken + bcryptjs) |
-| Deployment | Vercel (FE) + Render (BE) + MongoDB Atlas (DB) |
+
 
 ---
 
-## 🔮 What to Build Next
 
-- [ ] ML demand prediction (Prophet/scikit-learn)
-- [ ] Driver mobile app (React Native)
-- [ ] PostGIS integration for geospatial queries
-- [ ] Analytics dashboard with Recharts
-- [ ] SMS notifications via Twilio
-- [ ] EV charging schedule optimizer
